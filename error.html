@@ -1,0 +1,35 @@
+<!-- templates/error.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Error {{ error_code }} - Workout Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+            <h1 class="text-4xl font-bold text-red-600 mb-4">Error {{ error_code }}</h1>
+            <p class="text-gray-600 mb-6">{{ error_message }}</p>
+            <a href="{{ url_for('index') }}" class="block w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 text-center">
+                Return to Home
+            </a>
+        </div>
+    </div>
+    {% extends "base.html" %}
+
+    {% block title %}Error {{ error_code }}{% endblock %}
+    
+    {% block content %}
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+            <h1 class="text-4xl font-bold text-red-600 mb-4">Error {{ error_code }}</h1>
+            <p class="text-gray-600 mb-6">{{ error_message }}</p>
+            <a href="{{ url_for('index') }}" 
+               class="block w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 text-center">
+               Return to Home
+            </a>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>
