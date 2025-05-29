@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-center mb-8">Workout Tracker</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-2xl font-semibold mb-4">Weighted Exercises</h2>
+            <div class="space-y-4">
+                <a href="{{ url_for('exercise', exercise_type='bicep_curls') }}" 
+                   class="block w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 text-center">
+                   Bicep Curls
+                </a>
+                <a href="{{ url_for('exercise', exercise_type='shoulder_raises') }}"
+                   class="block w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 text-center">
+                   Shoulder Raises
+                </a>
+                <a href="{{ url_for('exercise', exercise_type='press') }}"
+                   class="block w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 text-center">
+                   Shoulder/Inclined Press
+                </a>
+                <a href="{{ url_for('exercise', exercise_type='deadlift') }}"
+                   class="block w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 text-center">
+                   Deadlift
+                </a>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-2xl font-semibold mb-4">Non-Weighted Exercises</h2>
+            <div class="space-y-4">
+                <a href="{{ url_for('exercise', exercise_type='pushup') }}"
+                   class="block w-full py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600 text-center">
+                   Push-ups
+                </a>
+                <a href="{{ url_for('exercise', exercise_type='pullup') }}"
+                   class="block w-full py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600 text-center">
+                   Pull-ups
+                </a>
+                <a href="{{ url_for('exercise', exercise_type='squats') }}"
+                   class="block w-full py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600 text-center">
+                   Squats
+                </a>
+                <!-- <a href="{{ url_for('exercise', exercise_type='lunges') }}"
+                   class="block w-full py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600 text-center">
+                   Lunges
+                </a> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer with GitHub and LinkedIn icons -->
+    <footer class="mt-8 text-center">
+        <div class="flex justify-center space-x-4">
+            <a href="https://github.com/HM56/rajmachawal" target="_blank" class="text-gray-600 hover:text-gray-800">
+                <i class="fab fa-github fa-2x"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/aims-dtu/posts/" target="_blank" class="text-blue-600 hover:text-blue-800">
+                <i class="fab fa-linkedin fa-2x"></i>
+            </a>
+        </div>
+    </footer>
+</div>
+{% endblock %}
