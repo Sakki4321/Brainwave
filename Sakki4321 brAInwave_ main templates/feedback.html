@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Workout Analysis{% endblock %}
+{% block content %}
+
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-center mb-8">Workout Analysis & Feedback</h1>
+
+    <div class="max-w-4xl mx-auto">
+        <!-- Exercise Summary Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Your Exercise Summary</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {% for exercise, count in exercise_data.items() %}
+                <div class="bg-blue-50 p-4 rounded">
+                    <h3 class="font-medium text-gray-800">{{ exercise|replace('_', ' ')|title }}</h3>
+                    <p class="text-xl font-semibold">{{ count }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Feedback Section -->
+        {% if feedback %}
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-semibold mb-6">AI Analysis & Recommendations</h2>
+            
+            <div class="space-y-6">
+                {% for section in feedback.split('##') %}
+                    {% if section.strip() %}
+                        {% set lines = section.strip().split('\n') %}
+                        {% if lines[0] %}
+                        <div class="bg-gray-50 rounded-lg p-6">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4">{{ lines[0]|replace('**', '') }}</h3>
+                            
+                            <div class="space-y-4">
+                                {% for line in lines[1:] %}
+                                    {% if line.strip().startswith('###') %}
+                                        <h4 class="text-lg font-semibold text-gray-800 mt-6 mb-3">
+                                            {{ line.replace('###', '')|replace('**', '')|trim }}
+                                        </h4>
+                                    {% elif line.strip().startswith('####') %}
+                                        <h5 class="text-md font-semibold text-gray-700 mt-4 mb-2">
+                                            {{ line.replace('####', '')|replace('**', '')|trim }}
+                                        </h5>
+                                    {% elif line.strip().startswith('-') %}
+                                        <div class="flex items-start">
+                                            <span class="text-blue-500 mr-2">•</span>
+                                            {% set content = line.replace('-', '')|trim %}
+                                            {% if '**' in content %}
+                                                {% set parts = content.split('**') %}
+                                                <span>
+                                                    {% for part in parts %}
+                                                        {% if loop.index0 % 2 == 0 %}
+                                                            {{ part }}
+                                                        {% else %}
+                                                            <strong>{{ part }}</strong>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </span>
+                                            {% else %}
+                                                <span>{{ content }}</span>
+                                            {% endif %}
+                                        </div>
+                                    {% elif line.strip() %}
+                                        {% if '**' in line %}
+                                            {% set parts = line.split('**') %}
+                                            <p>
+                                                {% for part in parts %}
+                                                    {% if loop.index0 % 2 == 0 %}
+                                                        {{ part }}
+                                                    {% else %}
+                                                        <strong>{{ part }}</strong>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </p>
+                                        {% else %}
+                                            <p>{{ line|trim }}</p>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <!-- Loading State -->
+        <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+            <p>Analyzing your workout data...</p>
+        </div>
+        {% endif %}
+
+        <!-- Refresh Button -->
+        <div class="flex justify-center mt-8">
+            <a href="{{ url_for('get_feedback') }}" 
+               class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition duration-150 ease-in-out">
+                Refresh Analysis
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
